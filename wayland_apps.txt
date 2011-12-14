@@ -1,0 +1,43 @@
+= Developers writing Wayland applications =
+
+This section is aimed for developers interested in building and porting their
+applications to Wayland. Wayland is flexible in not defining any drawing
+interface, and virtually any abstraction library that lets you render into a
+sharable buffer is enough for it. Although, to ease programmer's life, it is
+recommended to use widget library "toolkits" due their high-level nature of
+abstraction. Therefore, this section targets both toolkits and standalone
+application developers.
+
+Thus, Section x.x describes how to write standalone OpenGL applications using
+EGL as window system binding on the top of Wayland. A corresponding input
+subsystem is shown also in this section. Section x.x describes how Clutter
+toolkit could be used for application developers build a client on Wayland;
+likewise Section x.x describes for the Qt framework. Last section outlines
+about application compatibility among themselves and with different compositor
+implementations.
+
+== standalone OpenGL with EGL (Rob?) ==
+        - How does one write low level EGL apps against Wayland? What about
+          Cairo or just custom CPU rendered apps? This may come down to just
+          documenting GBM nicely.
+        - some code snips showing how to do so
+
+== per-toolkit "best practices" (Tiago/Rob) ==
+        - E.g. explain how writing a GTK app under Wayland is different than
+          X, same for Qt.  Highlight places where things may be different or
+          have performance implications.
+        - "don't use raw X calls", neither Wayland in principle but one would
+          like to access native Wayland types for more robust and complex
+          operation.
+        - explain a bit about grabs and compare with the X style: grabs don't
+          work the way they do under X.  Can't get window absolute position
+          under Wayland.
+        - how to get good performance? what not?
+        - clutter code snips (bonus points for dnd, selection, etc)
+        - qt code snips
+
+== Applications Interoperability ==
+        - we should also note something about compatibility here; Wayland apps
+          for different verticals with different window system behavior may not
+          behave the same; hopefully extensions for such will make it possible
+          to write portable & scalable apps.
