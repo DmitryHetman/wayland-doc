@@ -41,3 +41,8 @@ implementations.
           for different verticals with different window system behavior may not
           behave the same; hopefully extensions for such will make it possible
           to write portable & scalable apps.
+----
+TODO:
+- why Wayland? Is it better than X? Memory wise is better? Simplicity? What,
+  in the application's perspective? We have to somewhere document it around
+  and try to be very clear in this regarding.
