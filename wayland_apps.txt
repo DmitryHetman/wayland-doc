@@ -25,6 +25,44 @@ EGL as window system binding. That section could be used also for developers
 that want to understand the Wayland native types in general. The last section
 outlines applications compatibility.
 
+== Clutter ==
+
+(robster's)
+
+== Qt 5 framework ==
+
+Qt 5 is structured with the Lighthouse (or Qt Platform) Abstraction, which is
+the windowing system and device agnostic architecture. That means Qt can load
+in run-time different backend plugins for different window systems as desired.
+For instance, an application developed on Qt could be run using "-platform
+xcb" and "-platform wayland" for XCB or Wayland respectively and should have a
+similar behavior on both systems, without the need to recompile.
+
+Qt abstraction exposes to applications developers two native resources of
+Wayland: wl_display and wl_surface. With those types, one could access
+Wayland internals to deal with special cases through the interface:
+
+    void *QPlatformNativeInterface::nativeResourceForWindow(const QByteArray &resource, QWindow *window)
+
+Getting the display global handler is quite straightforward, as shown in the
+following example:
+
+    QPlatformNativeInterface *native =
+        QGuiApplication::platformNativeInterface();
+    struct wl_display *wl_dpy = (struct wl_display *)
+        native->nativeResourceForWindow("display", NULL);
+
+TODO: wl_surface
+
+Differently from traditional X11 systems, Wayland gives more flexibility for
+applications to control windows decoration and the way they are mapped on the
+screen. Applications have to implement their own way of decorating windows.
+Therefore, some Qt functions like setWindowTitle(), raise() or lower(), holding
+window properties will have different effect on Wayland compositors.
+
+
+
+TODO:
 == per-toolkit "best practices" (Tiago/Rob) ==
         - E.g. explain how writing a GTK app under Wayland is different than
           X, same for Qt.  Highlight places where things may be different or
@@ -37,12 +75,7 @@ outlines applications compatibility.
           under Wayland.
         - how to get good performance? what not?
         - clutter code snips (bonus points for dnd, selection, etc)
-        - qt code snips
 
-=== Qt 5 framework ===
-        - mention something about that it's enough to just change "-platform
-          wayland" by "-platform xcb" and the same app should work seamlessly,
-          without the need to be recompiled.
 
 == standalone OpenGL with EGL (Rob?) ==
         - How does one write low level EGL apps against Wayland? What about
@@ -57,8 +90,9 @@ outlines applications compatibility.
           for different verticals with different window system behavior may not
           behave the same; hopefully extensions for such will make it possible
           to write portable & scalable apps.
-----
-TODO:
+
+== misc ==
 - why Wayland? Is it better than X? Memory wise is better? Simplicity? What,
   in the application's perspective? We have to somewhere document it around
   and try to be very clear in this regarding.
+- something special for WM developers?
