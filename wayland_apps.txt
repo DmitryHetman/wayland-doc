@@ -42,8 +42,15 @@ The following functionality is known not to work:
 
 * Key repeat - holding the same key for a continous period of time does not
   generate periodic key events.
-* The keyboard is hardcoded to a US us keyboard for the keycode mapping -
+* The keyboard is hardcoded to a US keyboard for the keycode mapping -
   currently there is no mechanism in Wayland for setting the keymap to use.
+* clutter_stage_set_user_resizable is a no-op - it should reject configures
+  from the compositor that are not expected by the backend.
+* Fullscreen behaviour has been observed to be flaky especially when calling
+  clutter_stage_set_fullscreen before the stage is realised.
+
+API to access the underlying wl_surface, wl_shell_surface and wl_display may
+be available in later versions of the code but are not available right now.
 
 == Qt 5 framework ==
 
