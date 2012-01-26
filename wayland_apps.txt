@@ -34,11 +34,8 @@ integrate with Wayland.
 Currently Clutter exposes no API that is Wayland specific - applications that
 are developed without using any backend specific API (for example functions in the clutter_x11_ namespace) can be used without modification.
 
-The wayland backend for Clutter is still experimental and there are some areas
-of functionality that have either a buggy implementation or an implementation
-that is missing.
-
-The following functionality is known not to work:
+The wWayland backend for Clutter is still experimental however is it reasonably
+mature. The backend has the following errata:
 
 * Key repeat - holding the same key for a continous period of time does not
   generate periodic key events.
@@ -51,6 +48,36 @@ The following functionality is known not to work:
 
 API to access the underlying wl_surface, wl_shell_surface and wl_display may
 be available in later versions of the code but are not available right now.
+
+== GTK+ ==
+
+GTK+ is a toolkit best suited for building conventional desktop applications.
+It has been ported to many platforms including X11, Quartz, Windows and now
+Wayland. The Wayland port should be considered very experimental. 
+
+The backend has the following errata:
+
+* Programmatically changing the size of a window that has already been created
+  (by the use of an expanding widget) will sometimes result in a window that
+  does not have the correct contents
+* Events from the scroll wheel (buttons 4 and 5) are not handled correctly
+* Scrolling can result in distorted rendering - this is usually resolved the
+  next time the window is fully repainted
+* Copy and paste functionality is implemented however there may be certain
+  cases that do not work - please report this as a bug
+* Drag and drop is not implemented
+* Occasionally the window surface may not be appear - try using
+  gtk_widget_show_all on the top level window to force the windows to be
+  visible - this bug is being actively worked on.
+* The keyboard map is hard coded to a US pc105 keyboard
+* Popup menus appear but do not have the correct grab behaviour and are not
+  positioned in the correct location.
+
+Due to the complexity of the GTK+ API implementing a complete and correct
+backend is very challenging. You can assist this effort by filing any bugs
+about missing functionality:
+https://bugzilla.gnome.org/enter_bug.cgi?product=gtk+ in the Wayland
+component.
 
 == Qt 5 framework ==
 
