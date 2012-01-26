@@ -27,7 +27,23 @@ outlines applications compatibility.
 
 == Clutter ==
 
-(robster's)
+Clutter is toolkit for writing rich graphical animated applications on top of
+OpenGL and OpenGL-ES. It uses the Wayland EGL abstraction to
+integrate with Wayland.
+
+Currently Clutter exposes no API that is Wayland specific - applications that
+are developed without using any backend specific API (for example functions in the clutter_x11_ namespace) can be used without modification.
+
+The wayland backend for Clutter is still experimental and there are some areas
+of functionality that have either a buggy implementation or an implementation
+that is missing.
+
+The following functionality is known not to work:
+
+* Key repeat - holding the same key for a continous period of time does not
+  generate periodic key events.
+* The keyboard is hardcoded to a US us keyboard for the keycode mapping -
+  currently there is no mechanism in Wayland for setting the keymap to use.
 
 == Qt 5 framework ==
 
